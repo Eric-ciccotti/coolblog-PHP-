@@ -13,9 +13,6 @@ else
     $p = 'home';
 }
 
-//initalisation des objets
-
-$db = new App\Database('coolblog');
 
 ob_start();
 

@@ -1,6 +1,9 @@
-<?php foreach ($db->query('SELECT * FROM articles', 'App\Table\Article') as $post): ?>
+<?php foreach (App\Table\Article::getLast() as $post): ?>
+
+        <?php  var_dump($post) ?>
 
         <a href="<?= $post->url ?>"><?= $post->titre; ?></a>
+        <p><em><?= $post->categorie ?></em></p>
         <p><?= $post->extrait; ?></p>
 
 <?php endforeach; ?>

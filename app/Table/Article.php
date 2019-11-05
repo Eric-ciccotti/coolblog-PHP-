@@ -2,8 +2,18 @@
 
 namespace App\Table;
 
+use App\App;
+
 class Article 
 {
+    public static function getLast()
+    {
+        return App::getDatabase()->query('
+        SELECT articles.id, articles.titre, articles.contenu, categories.titre AS categorie 
+        FROM articles 
+        LEFT JOIN categories ON categorie_id = categories.id '
+        , __CLASS__);
+    }
     /**
      * Si il rencontre une variable qu'il ne connait pas il va utiliser cette fonction
      *
