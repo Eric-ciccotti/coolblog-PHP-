@@ -10,7 +10,7 @@ class Table
 
     public static function find($id)
     {
-        return App::getDatabase()->prepare('SELECT * FROM ' . static::getTable() . ' WHERE id = ? ',[$id], get_called_class(), true);
+        return self::query('SELECT * FROM ' . static::getTable() . ' WHERE id = ? ',[$id], true);
     }
 
     public static function query($statement, $attributes = null, $one = false)
@@ -30,7 +30,7 @@ class Table
     {
         if (static::$table === null)
         {   
-            $class = get_called_class(); // "App\Table\Categorie"
+            // $class = get_called_class(); --> "App\Table\Categorie"
             $class_name = explode('\\', get_called_class()); // ["App","Table","Categorie"] , le '\\' -> \ + \' ( pour la guillemet)
             static::$table = strtolower(end($class_name)) . 's'; //dernier element du tableau + minuscule + 's' = "categories" par exemple 
            

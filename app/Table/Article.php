@@ -2,11 +2,18 @@
 
 namespace App\Table;
 
-use App\App;
-
 class Article extends Table  
 {
     // protected static $table = 'articles';
+
+    public static function find($id)
+    {
+        return self::query('
+        SELECT articles.id, articles.titre, articles.contenu, categories.titre AS categorie 
+        FROM articles 
+        LEFT JOIN categories ON categorie_id = categories.id
+        WHERE articles.id = ?',[$id], true);
+    }
 
     public static function lastByCategory($categorie_id)
     {
@@ -14,7 +21,8 @@ class Article extends Table
         SELECT articles.id, articles.titre, articles.contenu, categories.titre AS categorie 
         FROM articles 
         LEFT JOIN categories ON categorie_id = categories.id 
-        WHERE categorie_id = ?'
+        WHERE categorie_id = ?
+        ORDER BY articles.date DESC'
         ,[$categorie_id]);
     }
     public static function getLast()
@@ -22,7 +30,8 @@ class Article extends Table
         return self::query('
         SELECT articles.id, articles.titre, articles.contenu, categories.titre AS categorie 
         FROM articles 
-        LEFT JOIN categories ON categorie_id = categories.id ');
+        LEFT JOIN categories ON categorie_id = categories.id 
+        ORDER BY articles.date DESC');
     }
 
     public function getUrl()
@@ -36,6 +45,5 @@ class Article extends Table
         $html .= '<p><a href="'. $this->getUrl() .'">Voir la suite</a><p>';
         return $html;
     }
-
 }
 ?>

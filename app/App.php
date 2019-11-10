@@ -9,6 +9,7 @@ class App
     const DB_HOST = 'localhost';
 
     private static $database;
+    private static $webSite_title = 'Mon Super Site';
 
     public static function getDatabase()
     {
@@ -23,5 +24,15 @@ class App
     {
         header('HTTP/1.0 404 Not Found');
         header('Location:index.php?p=404');
+    }
+
+    public static function getTitle()
+    {
+        return self::$webSite_title;
+    }
+
+    public static function setTitle($title)
+    {
+        self::$webSite_title = $title. ' | ' . self::$webSite_title; 
     }
 }
