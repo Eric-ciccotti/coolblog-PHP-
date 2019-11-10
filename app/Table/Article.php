@@ -4,35 +4,27 @@ namespace App\Table;
 
 use App\App;
 
-class Article 
+class Article extends Table  
 {
-    public static function getLast()
+    // protected static $table = 'articles';
+
+    public static function lastByCategory($categorie_id)
     {
-        return App::getDatabase()->query('
+        return self::query('
         SELECT articles.id, articles.titre, articles.contenu, categories.titre AS categorie 
         FROM articles 
-        LEFT JOIN categories ON categorie_id = categories.id '
-        , __CLASS__);
+        LEFT JOIN categories ON categorie_id = categories.id 
+        WHERE categorie_id = ?'
+        ,[$categorie_id]);
     }
-    /**
-     * Si il rencontre une variable qu'il ne connait pas il va utiliser cette fonction
-     *
-     * @param [type] $get
-     * @return void
-     */
-    public function __get($key)
+    public static function getLast()
     {
-        // var_dump('Method magique __get called');
-        $method = 'get' . ucfirst($key);
-  
-        $this->$key = $this->$method();
-        // pour appelé la méthode une seule fois
-        // php va se dire = "tu m'a déja appelé une fois, donc je connais"
-        // si on fait direct return $this>method()
-        // la methode va etre appelée plusieurs fois ->
-
-        return $this->$key;
+        return self::query('
+        SELECT articles.id, articles.titre, articles.contenu, categories.titre AS categorie 
+        FROM articles 
+        LEFT JOIN categories ON categorie_id = categories.id ');
     }
+
     public function getUrl()
     {
         return 'index.php?p=article&id=' . $this->id;

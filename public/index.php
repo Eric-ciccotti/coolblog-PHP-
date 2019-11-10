@@ -24,6 +24,10 @@ else if($p === 'article')
 {
     require '../pages/article.php';
 }
+else if($p === 'categorie')
+{
+    require '../pages/categorie.php';
+}
 $content = ob_get_clean();
 // Lit le contenu courant du tampon de sortie puis l'efface
 
