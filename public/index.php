@@ -4,6 +4,10 @@ require '../app/Autoloader.php'; // inclut le contenu d'un autre fichier appelé
 
 App\Autoloader::register();
 
+$app = App\App::getInstance();
+
+$posts = $app->getTable('Posts');
+$posts = $app->getTable('Categories');
 
 ?>
 

@@ -6,6 +6,7 @@ class App
 
     public $webSite_title = 'Mon Super Site';
     private static $_instance;
+    private $db_instance;
 
     public static function getInstance()
     {
@@ -16,28 +17,19 @@ class App
         return self::$_instance;
     }
 
-    // public static function getDatabase()
-    // {
-    //     if (self::$database === null)
-    //     {
-    //         self::$database = new Database(self::DB_NAME, self::DB_USER, self::DB_PASS, self::DB_HOST);
-    //     }
-    //     return self::$database;
-    // }
+    public function getTable($tableName)
+    {
+        $class_name = '\\App\\Table\\' . ucfirst($tableName) . 'Table';
+        return new $class_name();
+    }
 
-    // public static function notFound()
-    // {
-    //     header('HTTP/1.0 404 Not Found');
-    //     header('Location:index.php?p=404');
-    // }
-
-    // public static function getTitle()
-    // {
-    //     return self::$webSite_title;
-    // }
-
-    // public static function setTitle($title)
-    // {
-    //     self::$webSite_title = $title. ' | ' . self::$webSite_title; 
-    // }
+    public function getDb()
+    {
+        $config = Config::getInstance();
+        if (is_null($this->db_instance))
+        {
+            $this->db_instance = new Database($config->get('db_name'), $config->get('db_user'), $config->get('db_pass'), $config->get('db_host'));
+        }
+        return $this->db_instance;
+    }
 }
