@@ -3,36 +3,41 @@ namespace App;
 
 class App
 {
-    const DB_NAME = 'coolblog';
-    const DB_USER = 'root';
-    const DB_PASS = '';
-    const DB_HOST = 'localhost';
 
-    private static $database;
-    private static $webSite_title = 'Mon Super Site';
+    public $webSite_title = 'Mon Super Site';
+    private static $_instance;
 
-    public static function getDatabase()
+    public static function getInstance()
     {
-        if (self::$database === null)
+        if(is_null(self::$_instance))
         {
-            self::$database = new Database(self::DB_NAME, self::DB_USER, self::DB_PASS, self::DB_HOST);
+            self::$_instance = new App();
         }
-        return self::$database;
+        return self::$_instance;
     }
 
-    public static function notFound()
-    {
-        header('HTTP/1.0 404 Not Found');
-        header('Location:index.php?p=404');
-    }
+    // public static function getDatabase()
+    // {
+    //     if (self::$database === null)
+    //     {
+    //         self::$database = new Database(self::DB_NAME, self::DB_USER, self::DB_PASS, self::DB_HOST);
+    //     }
+    //     return self::$database;
+    // }
 
-    public static function getTitle()
-    {
-        return self::$webSite_title;
-    }
+    // public static function notFound()
+    // {
+    //     header('HTTP/1.0 404 Not Found');
+    //     header('Location:index.php?p=404');
+    // }
 
-    public static function setTitle($title)
-    {
-        self::$webSite_title = $title. ' | ' . self::$webSite_title; 
-    }
+    // public static function getTitle()
+    // {
+    //     return self::$webSite_title;
+    // }
+
+    // public static function setTitle($title)
+    // {
+    //     self::$webSite_title = $title. ' | ' . self::$webSite_title; 
+    // }
 }
